@@ -19,6 +19,7 @@ from pages.index import index_menu
 from pages.international import international_menu
 from pages.hospitals import hospitals_menu
 from pages.lockdown import lockdown_menu
+from pages.coronalert import coronalert_menu
 
 from graphs.tomtom_traffic import map_tomtom_by_day
 
@@ -68,7 +69,7 @@ def memoize(timeout=24*60*60):
     return cache.memoize(timeout, make_name=lambda f: f"{get_locale()}_{f}")
 
 
-menus = [index_menu, cases_menu, deaths_menu, hospitals_menu, lockdown_menu, international_menu]
+menus = [index_menu, cases_menu, deaths_menu, hospitals_menu, lockdown_menu, coronalert_menu, international_menu]
 menu_links = {}
 for menu_idx, menu in enumerate(menus):
     for x in menu.children:

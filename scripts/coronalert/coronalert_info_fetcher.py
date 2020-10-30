@@ -2,16 +2,16 @@
 import requests
 import tempfile
 from zipfile import ZipFile
-import tek_decode
+import scripts.coronalert.coronalert_tek_decode as tek_decode
 import csv
 import datetime
 import sys
 # This assumes that the TEK is renewed once every 24h on the device.
 
 TEK_DOWNLOAD_PATH = "https://c19distcdn-prd.ixor.be/version/v1/diagnosis-keys/country/BE/date";
-EXTRACTION_PATH = "temp_tek_folder"
+EXTRACTION_PATH = "../static/coronalert/temp_tek_folder"
 DAYS_IN_PAST = 14
-CSV_FILE_PATH = "../../static/csv/coronalert.csv"
+CSV_FILE_PATH = "../static/csv/coronalert.csv"
 # 1: Confirmed test - Low transmission risk level
 # 2: Confirmed test - Standard transmission risk level
 # 3: Confirmed test - High transmission risk level
@@ -48,7 +48,7 @@ def main(new_file=False):
     #     file = open(csv_file_path, 'wb')
 
     w = csv.writer(file,  dialect='excel')
-    w.writerow({"DATE", "RISK_LEVEL", "COUNT"})
+    w.writerow(["DATE", "RISK_LEVEL", "RISK_LEVEL_LABEL", "COUNT"])
 
     # The size of each step in days
     day_delta = datetime.timedelta(days=1)
@@ -67,7 +67,7 @@ def main(new_file=False):
 
         tek_count_at_date = fetch_data_for_date(date_string)
         for i in range(len(tek_count_at_date)):
-            csv_row = [date, RISK_MAP[i], tek_count_at_date[i]]
+            csv_row = [date, i, RISK_MAP[i], tek_count_at_date[i]]
             w.writerow(csv_row)
 
 def fetch_data_for_date(date_string):

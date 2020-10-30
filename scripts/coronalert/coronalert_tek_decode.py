@@ -2,7 +2,7 @@
 # From https://github.com/sftcd/tek_transparency/
 # --------------------------------------
 import binascii
-import TemporaryExposureKeyExport_pb2
+from scripts.coronalert import TemporaryExposureKeyExport_pb2
 import array
 
 def count_keys_in_file (file_path):
